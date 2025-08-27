@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, request, redirect, session, url
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "この部分はランダムな文字列にしてください"
+app.secret_key = "gcfgyhjbvghjnb"
 
 # --- データベース初期化 ---
 def init_db():
@@ -53,37 +53,37 @@ TEMPLATE = """
 <html>
 <head>
     <meta charset="utf-8">
-    <title>楽譜管理アプリ</title>
+    <title>吹奏楽部-譜面管理-</title>
     <style>
         body { background-color: #add8e6; font-family: Arial, sans-serif; margin: 20px; }
         h1 { color: #333; }
-        form { margin-bottom: 20px; background: white; padding: 15px; border-radius: 10px; }
-        label { display: block; margin-top: 10px; }
-        input, textarea { width: 100%; padding: 5px; margin-top: 5px; }
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { border: 1px solid #aaa; padding: 8px; text-align: left; }
-        th { background: #eee; }
-        .delete-btn { color: white; background: red; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; }
+        form { margin-bottom: 20px; }
+        input[type=text] { padding: 5px; margin: 3px; width: 200px; }
+        input[type=submit] { padding: 5px 15px; margin: 5px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td { border: 1px solid #666; padding: 8px; text-align: left; }
+        th { background-color: #ddd; }
+        .delete-btn { background: red; color: white; border: none; padding: 5px 10px; cursor: pointer; }
     </style>
 </head>
 <body>
-    <h1>楽譜管理アプリ</h1>
+    <h1>吹奏楽部-譜面管理-</h1>
 
-    <form method="POST" action="{{ url_for('add') }}">
-        <h2>楽譜を追加</h2>
-        <label>ID: <input type="text" name="song_id" required></label>
-        <label>楽曲名: <input type="text" name="title" required></label>
-        <label>作曲者: <input type="text" name="composer"></label>
-        <label>ジャンル: <input type="text" name="genre"></label>
-        <label>振り分け番号: <input type="text" name="number"></label>
-        <label>備考: <textarea name="notes"></textarea></label>
-        <button type="submit">追加</button>
+    <h2>楽譜の追加</h2>
+    <form method="POST" action="/add">
+        <input type="text" name="song_id" placeholder="ID" required>
+        <input type="text" name="title" placeholder="楽曲名" required>
+        <input type="text" name="composer" placeholder="作曲者">
+        <input type="text" name="genre" placeholder="ジャンル">
+        <input type="text" name="number" placeholder="振り分け番号">
+        <input type="text" name="notes" placeholder="備考">
+        <input type="submit" value="追加">
     </form>
 
     <h2>検索</h2>
     <form method="GET" action="/">
         <input type="text" name="q" placeholder="キーワード検索" value="{{ query }}">
-        <button type="submit">検索</button>
+        <input type="submit" value="検索">
     </form>
 
     <h2>登録された楽譜</h2>
@@ -106,8 +106,8 @@ TEMPLATE = """
             <td>{{ score[5] }}</td>
             <td>{{ score[6] }}</td>
             <td>
-                <form method="POST" action="{{ url_for('delete', score_id=score[0]) }}">
-                    <button type="submit" class="delete-btn">削除</button>
+                <form method="POST" action="/delete/{{ score[0] }}" style="display:inline;">
+                    <input type="submit" class="delete-btn" value="削除">
                 </form>
             </td>
         </tr>
