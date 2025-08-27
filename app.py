@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, request, redirect, session, url
 import sqlite3
 
 app = Flask(__name__)
-app.secret_key = "uhsdfhwfesd"
+app.secret_key = "この部分はランダムな文字列にしてください"
 
 # --- データベース初期化 ---
 def init_db():
@@ -56,8 +56,7 @@ TEMPLATE = """
     <title>楽譜管理アプリ</title>
     <style>
         body { background-color: #add8e6; font-family: Arial, sans-serif; margin: 20px; }
-        h1 { color: #333; display: inline-block; }
-        .logout { float: right; margin-top: 20px; }
+        h1 { color: #333; }
         form { margin-bottom: 20px; background: white; padding: 15px; border-radius: 10px; }
         label { display: block; margin-top: 10px; }
         input, textarea { width: 100%; padding: 5px; margin-top: 5px; }
@@ -65,15 +64,10 @@ TEMPLATE = """
         th, td { border: 1px solid #aaa; padding: 8px; text-align: left; }
         th { background: #eee; }
         .delete-btn { color: white; background: red; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer; }
-        .logout-btn { padding: 5px 10px; background: #333; color: white; border: none; border-radius: 5px; cursor: pointer; }
     </style>
 </head>
 <body>
     <h1>楽譜管理アプリ</h1>
-    <form method="GET" action="/logout" class="logout">
-        <button type="submit" class="logout-btn">ログアウト</button>
-    </form>
-    <div style="clear: both;"></div>
 
     <form method="POST" action="{{ url_for('add') }}">
         <h2>楽譜を追加</h2>
@@ -122,13 +116,14 @@ TEMPLATE = """
 </body>
 </html>
 """
+
 # --- ログインページ ---
 @app.route("/login", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
         password = request.form["password"]
-        if password == "seiko":  # ←ここを好きなパスワードに変更
+        if password == "1234":  # ←ここを好きなパスワードに変更
             session["logged_in"] = True
             return redirect("/")
         else:
