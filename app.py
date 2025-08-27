@@ -123,7 +123,7 @@ def login():
     error = None
     if request.method == "POST":
         password = request.form["password"]
-        if password == "1234":  # ←ここを好きなパスワードに変更
+        if password == "seiko":  # ←ここを好きなパスワードに変更
             session["logged_in"] = True
             return redirect("/")
         else:
